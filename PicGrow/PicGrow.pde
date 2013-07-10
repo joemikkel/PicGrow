@@ -22,7 +22,7 @@ void loadSourceImage(File image){
   growSpace.beginDraw();
   growSpace.fill(0,0,0,0);
   
-  frame.setSize(img.width, img.height);
+  frame.setSize(img.width + 18, img.height + 47);
   execute = true;
 }
 
@@ -44,8 +44,7 @@ void draw(){
   println(vines.size());
   processVines();
     growSpace.endDraw();
-
-  //image(img, 0, 0);
+    
   image(growSpace, 0, 0);
 }
 
