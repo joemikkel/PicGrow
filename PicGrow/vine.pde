@@ -8,7 +8,6 @@ class Vine{
   int HiDeltaX, LoDeltaX;    //these control the range of random motion of the particle
   int HiDeltaY, LoDeltaY;    //in the x and y dimension
   
-  //TESTING STUFF
   boolean isVertical = false;
   
   Vine(PGraphics growSpace, int x, int y, PImage bgImg){
@@ -29,13 +28,10 @@ class Vine{
   }
     
   boolean isSimilarColor(int otherColor){
-    //println("Red Vine : " + red(vineColor));
-    //println("Red BG : " + red(otherColor));
     float redDiff = abs(red(vineColor) - red(otherColor));
     float blueDiff = abs(blue(vineColor) - blue(otherColor));
     float greenDiff = abs(green(vineColor) - blue(otherColor));
     float totalDiff = redDiff + blueDiff + greenDiff;
-    //println("COLOR DIFFERENCE : " + totalDiff);
     if((redDiff + blueDiff + greenDiff)/3 > 80)
       return false;
     else
@@ -45,15 +41,11 @@ class Vine{
   void drawVine(){
     int xTarget, yTarget;
     
-    //xTarget = xPos + int(random(-2, 2));
-    //yTarget = yPos + int(random(-2, 2));
-    
     xTarget = xPos + int(random(LoDeltaX, HiDeltaX));
     yTarget = yPos + int(random(LoDeltaY, HiDeltaY));
     
     if(alpha(growSpace.get(xTarget, yTarget)) == 255){
       stuckCount++;
-      //println("StuckCount : " + stuckCount);
       return;
     }
     else{
