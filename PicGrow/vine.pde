@@ -65,14 +65,17 @@ class Vine{
       stuckCount = 100;
     
     if(isSimilarColor(bgImg.get(xTarget, yTarget))){
-
-      growSpace.stroke(vineColor, 255);
-      growSpace.strokeWeight(1);
+      
+      growSpace.stroke(vineColor, 5);
+      growSpace.strokeWeight(10);
       growSpace.line(xPos, yPos, xTarget, yTarget);
       
-      
-      growSpace.stroke(vineColor, 2);
-      growSpace.strokeWeight(10);
+      growSpace.stroke(vineColor, 1);
+      growSpace.strokeWeight(5);
+      growSpace.line(xPos, yPos, xTarget, yTarget);
+
+      growSpace.stroke(vineColor);
+      growSpace.strokeWeight(1);
       growSpace.line(xPos, yPos, xTarget, yTarget);
       
       xPos = xTarget;

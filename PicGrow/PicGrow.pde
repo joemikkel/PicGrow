@@ -58,7 +58,7 @@ void processVines(){
       iter.remove();
     }
     
-    if(nextVine.stuckCount < int(random(-75, -25))){
+    if(nextVine.stuckCount < int(random(-75, -25)) && vines.size() < 1000) {
       iter.add(new Vine(growSpace, nextVine.xPos + int(random(-2, 2)), nextVine.yPos + int(random(-2, 2)), img));
       nextVine.stuckCount = 0;
     }
