@@ -5,6 +5,9 @@ class Vine{
   int stuckCount;
   PImage bgImg;
   
+  int HiDeltaX, LoDeltaX;    //these control the range of random motion of the particle
+  int HiDeltaY, LoDeltaY;    //in the x and y dimension
+  
   //TESTING STUFF
   boolean isVertical = false;
   
@@ -17,6 +20,12 @@ class Vine{
     stuckCount = 0;
     if(random(-1, 1) > 0)
       isVertical = true;
+      
+    HiDeltaX = int(random(2, 5));
+    LoDeltaX = int(random(-5, -2));
+    
+    HiDeltaY = int(random(2, 5));
+    LoDeltaY = int(random(-5, -2));
   }
     
   boolean isSimilarColor(int otherColor){
@@ -30,48 +39,44 @@ class Vine{
     if((redDiff + blueDiff + greenDiff)/3 > 80)
       return false;
     else
-      return true;
-      
+      return true;  
   }
 
   void drawVine(){
     int xTarget, yTarget;
     
-    /*
-    if(!isVertical){
-      xTarget = xPos + int(random(-100, 100));
-      yTarget = yPos + int(random(-2, 2));
-    }
-    else{
-      xTarget = xPos + int(random(-2, 2));
-      yTarget = yPos + int(random(-100, 100));
-    }
-    */
+    //xTarget = xPos + int(random(-2, 2));
+    //yTarget = yPos + int(random(-2, 2));
     
-    xTarget = xPos + int(random(-2, 2));
-    yTarget = yPos + int(random(-2, 5));
+    xTarget = xPos + int(random(LoDeltaX, HiDeltaX));
+    yTarget = yPos + int(random(LoDeltaY, HiDeltaY));
     
-    if(growSpace.get(xTarget, yTarget) != color(0,0,0,0)){
+    if(alpha(growSpace.get(xTarget, yTarget)) == 255){
       stuckCount++;
       //println("StuckCount : " + stuckCount);
       return;
     }
-    
-    stuckCount = 0;
-    
+    else{
+      stuckCount--;
+    }
     
     if(yTarget >= img.height || yTarget <= 0 || 
        xTarget >= img.width || xTarget <= 0)
       stuckCount = 100;
     
-    
-    
-    
     if(isSimilarColor(bgImg.get(xTarget, yTarget))){
-      //println("FOUND SIMILAR COLOR!");
+
+      growSpace.stroke(vineColor, 255);
+      growSpace.strokeWeight(1);
+      growSpace.line(xPos, yPos, xTarget, yTarget);
+      
+      
+      growSpace.stroke(vineColor, 2);
+      growSpace.strokeWeight(10);
+      growSpace.line(xPos, yPos, xTarget, yTarget);
+      
       xPos = xTarget;
       yPos = yTarget;
-      growSpace.set(xPos, yPos, vineColor);
     }
   }
 }

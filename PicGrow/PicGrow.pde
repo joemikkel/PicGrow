@@ -8,8 +8,6 @@ void setup(){
   frame.setResizable(true);
   vines = new ArrayList<Vine>();
   selectInput("Select a .jpg ",  "loadSourceImage");
-  //while(img == null);
-   
 } 
 
 void loadSourceImage(File image){
@@ -33,24 +31,22 @@ void draw(){
     
   if(!execute)
     return;
+   
+  if(vines.size() < 10)
+    vines.add(new Vine(growSpace, int(random(0, width)), int(random(0, height)), img));
   
-  if(vines.size() < 10000)
-    for(int i = 0; i < 10000 - vines.size() / 2; i ++)
-      vines.add(new Vine(growSpace, int(random(0, width)), int(random(0, height)), img));
+  if(mousePressed){
+    for(int xBox = -5; xBox <= 5; xBox += 2)
+      for(int yBox = -5; xBox < 5; xBox += 2)
+        vines.add(new Vine(growSpace, mouseX + xBox , mouseY + yBox, img));
+  }
   
-  if(mousePressed)
-    vines.add(new Vine(growSpace, mouseX, mouseY, img));
-    
-  //println("GOT HERE!");
-  //image(img, 0, 0);
+  println(vines.size());
   processVines();
     growSpace.endDraw();
 
+  //image(img, 0, 0);
   image(growSpace, 0, 0);
-}
-
-void mousePressed(){
-  
 }
 
 void processVines(){
@@ -58,12 +54,14 @@ void processVines(){
   while(iter.hasNext()){
     Vine nextVine = iter.next();
     nextVine.drawVine();
-    //println("StuckCount : " + iter.next().stuckCount);
     
     if(nextVine.stuckCount > 50){
-      //println("Removing Stuck Vine!");
       iter.remove();
-      iter.add(new Vine(growSpace, int(random(0, width)), int(random(0, height)), img));
+    }
+    
+    if(nextVine.stuckCount < int(random(-75, -25))){
+      iter.add(new Vine(growSpace, nextVine.xPos + int(random(-2, 2)), nextVine.yPos + int(random(-2, 2)), img));
+      nextVine.stuckCount = 0;
     }
   } 
 }
